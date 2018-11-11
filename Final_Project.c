@@ -86,6 +86,60 @@ void input_detector()
 			else
 			{
 				seat_6 = 0;
+			}
+			
+			if((~PINC & 0x01) == 0x01)
+			{
+				belt_1 = 1;
+			}
+			else
+			{
+				belt_1 = 0;
+			}
+			
+			if((~PINC & 0x02) == 0x02)
+			{
+				belt_2 = 1;
+			}
+			else
+			{
+				belt_2 = 0;
+			}
+			
+			if((~PINC & 0x04) == 0x04)
+			{
+				belt_3 = 1;
+			}
+			else
+			{
+				belt_3 = 0;
+			}
+			
+			if((~PINC & 0x08) == 0x08)
+			{
+				belt_4 = 1;
+			}
+			else
+			{
+				belt_4 = 0;
+			}
+			
+			if((~PINC & 0x10) == 0x10)
+			{
+				belt_5 = 1;
+			}
+			else
+			{
+				belt_5 = 0;
+			}
+			
+			if((~PINC & 0x20) == 0x20)
+			{
+				belt_6 = 1;
+			}
+			else
+			{
+				belt_6 = 0;
 			}			
 			
 			ID_state = ID_assign_values;
@@ -118,14 +172,60 @@ void input_detector()
 		}
 		case ID_assign_values:
 		{
-			if((seat_1 == 1))
+			if((seat_1 == 1) && (belt_1 == 1))
 			{
-				PORTB = 0x01;
+				PORTB |= 0x01;
 			}
 			else
 			{
-				PORTB = 0x00;
+				PORTB &= 0xFE;
 			}
+			
+			if((seat_2 == 1) && (belt_2 == 1))
+			{
+				PORTB |= 0x02;
+			}
+			else
+			{
+				PORTB &= 0xFD;
+			}	
+			
+			if((seat_3 == 1) && (belt_3 == 1))
+			{
+				PORTB |= 0x04;
+			}
+			else
+			{
+				PORTB &= 0xFB;
+			}
+			
+			if((seat_4 == 1) && (belt_4 == 1))
+			{
+				PORTB |= 0x08;
+			}
+			else
+			{
+				PORTB &= 0xF7;
+			}
+			
+			if((seat_5 == 1) && (belt_5 == 1))
+			{
+				PORTB |= 0x10;
+			}
+			else
+			{
+				PORTB &= 0xEF;
+			}
+			
+			if((seat_6 == 1) && (belt_6 == 1))
+			{
+				PORTB |= 0x20;
+			}
+			else
+			{
+				PORTB &= 0xDF;
+			}
+			
 			
 			break;
 		}
