@@ -12,10 +12,6 @@
 #include "User_input.h"
 #include "User_input.c"
 
-// Variables
-		
-// Call Functions
-
 // Main
 int main(void) {
 	
@@ -23,6 +19,8 @@ int main(void) {
 	DDRB = 0xFF; PORTB = 0x00;
 	DDRA = 0x00; PORTA = 0xFF;
 	DDRC = 0x00; PORTC = 0xFF;
+	initUSART(0);
+	USART_Flush(0);
 
 	while(1) 
 	{

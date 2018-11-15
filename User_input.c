@@ -7,6 +7,7 @@
 
 // Pre-processor files
 #include "User_input.h"
+#include "usart_ATmega1284.h"
 
 // Variables
 unsigned char seat_1, seat_2, seat_3, seat_4, seat_5, seat_6;
@@ -16,24 +17,8 @@ unsigned int finish, flash_flag = 0;
 // Enumerated states
 enum ID_States {ID_SMStart, ID_Init, ID_assign_values} ID_state;
 enum SL_States {SL_Init, SL_Lights} SL_state;
-		/*
+		
 // Call Functions
-void transmit_data(unsigned char data) {
-	int i;
-	for (i = 0; i < 8 ; ++i) {
-		// Sets SRCLR to 1 allowing data to be set
-		// Also clears SRCLK in preparation of sending data
-		PORTC = 0x08;
-		// set SER = next bit of data to be sent.
-		PORTC |= ((data >> i) & 0x01);
-		// set SRCLK = 1. Rising edge shifts next bit of data into the shift register
-		PORTC |= 0x02;
-	}
-	// set RCLK = 1. Rising edge copies data from “Shift” register to “Storage” register
-	PORTC |= 0x04;
-	// clears all lines in preparation of a new transmission
-	PORTC = 0x00;
-}*/
 
 void input_detector()
 {
@@ -189,12 +174,24 @@ void input_detector()
 		}
 		case ID_assign_values:
 		{
+			// Contemplate making flags to send in the same data to distinguish between what works and what doesn't.
+			// May need one to tell if both == 1 or if 1 == 1.
 			if((seat_1 == 1) && (belt_1 == 1))
 			{
+				// Cannot be turned off. Must have seatbelt on if weight is detected.
 				PORTB |= 0x01;
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x01, 0);
+				}
+		
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);	
 			}
 			else
 			{
+				// Can be turned off.
 				PORTB &= 0xFE;
 				
 				if((seat_1 == 1) && (belt_1 == 0))
@@ -204,14 +201,32 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x81, 0);
+				}
+		
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);	
 			}
 			
 			if((seat_2 == 1) && (belt_2 == 1))
 			{
+				// Can be turned off.
 				PORTB |= 0x02;
+	
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x02, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			else
 			{
+				// Can be turned off.
 				PORTB &= 0xFD;
 				
 				if((seat_2 == 1) && (belt_2 == 0))
@@ -221,14 +236,32 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x82, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}	
 			
 			if((seat_3 == 1) && (belt_3 == 1))
 			{
+				// Can be turned off.
 				PORTB |= 0x04;
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x04, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			else
 			{
+				// Can be turned off.
 				PORTB &= 0xFB;
 				
 				if((seat_3 == 1) && (belt_3 == 0))
@@ -238,14 +271,32 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x84, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			
 			if((seat_4 == 1) && (belt_4 == 1))
 			{
+				// Can be turned off.
 				PORTB |= 0x08;
+			
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x08, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			else
 			{
+				// Can be turned off.
 				PORTB &= 0xF7;
 				
 				if((seat_4 == 1) && (belt_4 == 0))
@@ -255,11 +306,28 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x88, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			
 			if((seat_5 == 1) && (belt_5 == 1))
 			{
+				// Can be turned off.
 				PORTB |= 0x10;
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x10, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			else
 			{
@@ -272,11 +340,28 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x90, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			
 			if((seat_6 == 1) && (belt_6 == 1))
 			{
+				// Can be turned off.
 				PORTB |= 0x20;
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0x20, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			else
 			{
@@ -289,6 +374,14 @@ void input_detector()
 					PORTB &= 0x3F;
 					_delay_ms(300);
 				}
+				
+				if(USART_IsSendReady(0))
+				{
+					USART_Send(0xA0, 0);
+				}
+				
+				while(!USART_HasTransmitted(0));
+				_delay_ms(100);
 			}
 			
 			break;
