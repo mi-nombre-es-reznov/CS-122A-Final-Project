@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Seatbelt_Savior
+//  Seatbelt Savior
 //
-//  Created by Nicholas Perez-Aguilar on 11/20/18.
+//  Created by Nicholas Perez-Aguilar on 12/1/18.
 //  Copyright © 2018 Nicholas Perez-Aguilar. All rights reserved.
 //
 
@@ -15,9 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Thread.sleep(forTimeInterval: 5.0)
-
         // Override point for customization after application launch.
+        Thread.sleep(forTimeInterval: 5.0)
         return true
     }
 
