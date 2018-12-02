@@ -19,10 +19,16 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     @IBOutlet weak var Passenger_left_row_3: UIImageView!
     @IBOutlet weak var Passenger_right_row_3: UIImageView!
     
+    @IBOutlet var Add_item_View: UIView!
+    @IBOutlet weak var Visual_Effect_View: UIVisualEffectView!
+    
+    // Overlay that occurs when seatbelt hasn't been registered in over 10 seconds
+    var effect:UIVisualEffect!
     // Bluetooth setup and UUIDs
     var centralManager: CBCentralManager!
     var ATMega1284: CBPeripheral?
     
+    // Initializations
     let ServiceUUID = CBUUID(string: "FFE0")
     let uC_CharacteristicUUID = CBUUID(string: "FFE1")
     var message = ""
@@ -41,6 +47,12 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     //MARK: Preloaded functions
     override func viewDidLoad() {
         super.viewDidLoad() // Already pre-defined by Xcode
+        
+        // For overlay visual effect
+        effect = Visual_Effect_View.effect
+        Visual_Effect_View.effect = nil
+        
+        Add_item_View.layer.cornerRadius = 5
         
         // Assigning default boolean values to the comparator for auto check out upon starting of program
         let driver_locked = default_driver
@@ -63,6 +75,31 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         centralManager.delegate = self
     }
 
+    // Used to fade in cover over left side of screen to cover status of vehicle and overlay appears
+    func animateIn()
+    {
+        self.view.addSubview(Add_item_View)
+        Add_item_View.center = self.view.center
+        
+        Add_item_View.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        Add_item_View.alpha = 0
+        
+        UIView.animate(withDuration: 0.4)
+        {
+            self.Visual_Effect_View.effect = self.effect
+            self.Add_item_View.alpha = 1
+            self.Add_item_View.transform = CGAffineTransform.identity
+        }
+    }
+    // Used to fade in uncover over left side of screen to cover status of vehicle and overlay disappears
+    func animateOut()
+    {
+        UIView.animate(withDuration: 0.3 , animations: {self.Add_item_View.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.Add_item_View.alpha = 0
+            self.Visual_Effect_View.effect = nil}) { (success: Bool) in
+                self.Add_item_View.removeFromSuperview()
+        }
+    }
     
     //MARK: Actions
 @IBAction func EnableDisable_right_r1(_ sender: UITapGestureRecognizer)
@@ -79,17 +116,17 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
 }
 
 @IBAction func EnableDisable_left_r2(_ sender: UITapGestureRecognizer)
-{
-    if(Passenger_left_row_2.image == UIImage(named: "Disabled_seat"))
     {
-        Passenger_left_row_2.image = UIImage(named: "Seats")
+        if(Passenger_left_row_2.image == UIImage(named: "Disabled_seat"))
+        {
+            Passenger_left_row_2.image = UIImage(named: "Seats")
+        }
+        else
+        {
+            Passenger_left_row_2.image = UIImage(named: "Disabled_seat")
+        }
     }
-    else
-    {
-        Passenger_left_row_2.image = UIImage(named: "Disabled_seat")
-    }
-}
-
+    
 @IBAction func EnableDisable_right_r2(_ sender: UITapGestureRecognizer)
 {
     if(Passenger_right_row_2.image == UIImage(named: "Disabled_seat"))
@@ -131,9 +168,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     {
         if(value == 0x01)
         {
-            //print(value)
-            print("Driver has status: GOOD")
-            
             if(Driver_top_left_row_1.image != UIImage(named: "Seats") && Driver_top_left_row_1.image != UIImage(named: "Disabled_seat"))
             {
                 Driver_top_left_row_1.image = UIImage(named: "Seats")
@@ -141,9 +175,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x02)
         {
-            //print(value)
-            print("Passenger 2 has status: GOOD")
-            
             if(Passenger_right_row_1.image != UIImage(named: "Seats") && Passenger_right_row_1.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_1.image = UIImage(named: "Seats")
@@ -151,9 +182,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x04)
         {
-            //print(value)
-            print("Passenger 3 has status: GOOD")
-            
             if(Passenger_left_row_2.image != UIImage(named: "Seats") && Passenger_left_row_2.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_left_row_2.image = UIImage(named: "Seats")
@@ -161,9 +189,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x08)
         {
-            //print(value)
-            print("Passenger 4 has status: GOOD")
-            
             if(Passenger_right_row_2.image != UIImage(named: "Seats") && Passenger_right_row_2.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_2.image = UIImage(named: "Seats")
@@ -171,9 +196,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x10)
         {
-            //print(value)
-            print("Passenger 5 has status: GOOD")
-            
             if(Passenger_left_row_3.image != UIImage(named: "Seats") && Passenger_left_row_3.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_left_row_3.image = UIImage(named: "Seats")
@@ -181,9 +203,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x20)
         {
-            //print(value)
-            print("Passenger 6 has status: GOOD")
-            
             if(Passenger_right_row_3.image != UIImage(named: "Seats") && Passenger_right_row_3.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_3.image = UIImage(named: "Seats")
@@ -191,9 +210,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x81)
         {
-            //print(value)
-            print("Driver has status: Unbuckled")
-            
             if(Driver_top_left_row_1.image != UIImage(named: "Unbuckled") && Driver_top_left_row_1.image != UIImage(named: "Disabled_seat"))
             {
                 Driver_top_left_row_1.image = UIImage(named: "Unbuckled")
@@ -201,8 +217,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x82)
         {
-            //print(value)
-            print("Passenger 2 has status: Unbuckled")
             if(Passenger_right_row_1.image != UIImage(named: "Unbuckled") && Passenger_right_row_1.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_1.image = UIImage(named: "Unbuckled")
@@ -210,8 +224,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x84)
         {
-            //print(value)
-            print("Passenger 3 has status: Unbuckled")
             if(Passenger_left_row_2.image != UIImage(named: "Unbuckled") && Passenger_left_row_2.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_left_row_2.image = UIImage(named: "Unbuckled")
@@ -219,8 +231,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x88)
         {
-            //print(value)
-            print("Passenger 4 has status: Unbuckled")
             if(Passenger_right_row_2.image != UIImage(named: "Unbuckled") && Passenger_right_row_2.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_2.image = UIImage(named: "Unbuckled")
@@ -228,8 +238,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0x90)
         {
-            //print(value)
-            print("Passenger 5 has status: Unbuckled")
             if(Passenger_left_row_3.image != UIImage(named: "Unbuckled") && Passenger_left_row_3.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_left_row_3.image = UIImage(named: "Unbuckled")
@@ -237,8 +245,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         }
         else if(value == 0xA0)
         {
-            //print(value)
-            print("Passenger 6 has status: Unbuckled")
             if(Passenger_right_row_3.image != UIImage(named: "Unbuckled") && Passenger_right_row_3.image != UIImage(named: "Disabled_seat"))
             {
                 Passenger_right_row_3.image = UIImage(named: "Unbuckled")
@@ -256,6 +262,8 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         else
         {
             print("Status: OKAY!")
+            count = 0
+            animateOut()
         }
         
     }
@@ -331,18 +339,17 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
             test_hex(seat_status)
         }
     }
+
     
     // Delay Timer, used for counting time without seatbelt
     func warning_ignored()
     {
-        print("Put your damn seatbelt on!!!")
         count += 1
-        print("\n + \(count)")
-        
         if(count == 60)
         {
-            
+            animateIn()
         }
     }
+    
     
 }
