@@ -196,14 +196,6 @@ void input_detector()
 				// Can be turned off.
 				PORTB &= 0xFE;
 				
-				/*if((seat_1 == 1) && (belt_1 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
-				
 				if(USART_IsSendReady(0))
 				{
 					USART_Send(0x81, 0);
@@ -230,14 +222,6 @@ void input_detector()
 			{
 				// Can be turned off.
 				PORTB &= 0xFD;
-				
-				/*if((seat_2 == 1) && (belt_2 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
 				
 				if(USART_IsSendReady(0))
 				{
@@ -266,14 +250,6 @@ void input_detector()
 				// Can be turned off.
 				PORTB &= 0xFB;
 				
-				/*if((seat_3 == 1) && (belt_3 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
-				
 				if(USART_IsSendReady(0))
 				{
 					USART_Send(0x84, 0);
@@ -301,14 +277,6 @@ void input_detector()
 				// Can be turned off.
 				PORTB &= 0xF7;
 				
-				/*if((seat_4 == 1) && (belt_4 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
-				
 				if(USART_IsSendReady(0))
 				{
 					USART_Send(0x88, 0);
@@ -334,14 +302,6 @@ void input_detector()
 			else
 			{
 				PORTB &= 0xEF;
-				
-				/*if((seat_5 == 1) && (belt_5 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
 				
 				if(USART_IsSendReady(0))
 				{
@@ -369,14 +329,6 @@ void input_detector()
 			{
 				PORTB &= 0xDF;
 				
-				/*if((seat_6 == 1) && (belt_6 == 0))
-				{
-					PORTB |= 0xC0;
-					_delay_ms(300);
-					PORTB &= 0x3F;
-					_delay_ms(300);
-				}*/
-				
 				if(USART_IsSendReady(0))
 				{
 					USART_Send(0xA0, 0);
@@ -391,9 +343,9 @@ void input_detector()
 			{
 				if(count >= 20)
 				{
-					PORTB |= 0xC0;
+					PORTB = 0x01;
 					_delay_ms(300);
-					PORTB &= 0x3F;
+					PORTB = 0x00;
 					_delay_ms(300);
 				}
 			}
