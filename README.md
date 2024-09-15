@@ -1,6 +1,31 @@
-# CS-122A-Final-Project
-This is my CS 122A Final project. This is a seat belt protector inspired by and for Tesla vehicles.
+# CS-122A Final Project: Advanced Seatbelt Monitor for Tesla Vehicles
 
-I came up with this project when I was looking up videos on the new Tesla feature that was added to reduce crashes in their vehicles, because of driver negligence to follow the warnings that the car continuously provided. There was an incident that I remember happening where there was this man who was riding in his Tesla, as if it were a Taxicab, and was not following the safety protocol by not holding onto the steering wheel or even touching it, despite the vehicle's several warnings. Unfortunately, for him, the car did have a complicated time on a road with the yellow/white divider lines and his vehicle went off course during a turn and crashed into a previously crashed barrier, thus killing the him and totaling his Tesla. It was around this time in which I became interested to know what safety features were involved with the vehicle. After a little bit of research, I discovered the Tesla has a warning system setup and there was feedback that was sent to Tesla after the crash, informing them that certain things did deploy, messages were announced, and that the driver ignored all the warnings by not following through and touching the sensors on the wheel (treating it like it was fully autonomous). Since then, there has been an update pushed out that will produce more warnings, each more obvious than the last, and if all warnings have failed to be followed in a timely manner, then the car auto-disengages, comes to a halt and puts on flashers, and disables autopilot for the remainder of the driver’s trip. With that, I felt like I could develop something that Tesla may have partly implemented but could help protect more drivers and potentially save lives and reduce injury, in the event of an accident.
+## Overview
 
-The project that I want to create is a seatbelt monitor. This seatbelt monitor will be currently used inside of Tesla vehicles, as it would use the capabilities of the Bluetooth dashboard as a means of communication between seats and the driver. This seatbelt monitor would also have the capabilities to disable the car as the autopilot does (as a punishment for being unsafe/allowing for serious injury/death). The seats would all have a way of communicating (more than likely through Bluetooth) and weight sensors. There would be constant communication between the sensors and the dashboard, which would also be attached to the computer. The driver would have to make sure that any seat that had a certain weight detected, would have a seatbelt on, or the vehicle would not start. The driver, would have the capability of disabling the feature on any seat except for the driver’s seat, if there could be something that weighed above the limit, but didn’t require a seatbelt (i.e. moving from one location to another, boxes could trigger the seatbelt break, but wouldn’t necessarily need to have a seatbelt on). The driver wouldn’t be able to disable the driver’s seat because there needs to be a driver always with a seatbelt on, as it works alongside with the autopilot system that requires a hand touch every so often. The driver/passenger would be able to not only disarm certain seats to allow the car to move, but the car would not shift out of park unless all seatbelts on all seats registered with a certain weight were buckled in.
+For my CS 122A final project, I developed an advanced seatbelt monitoring system tailored for Tesla vehicles. This project was inspired by a tragic incident where a Tesla driver ignored safety warnings, leading to a fatal crash. My goal was to enhance vehicle safety and potentially save lives by creating a system that integrates seamlessly with Tesla’s existing technology.
+
+## Problem Identification
+
+The inspiration for this project stemmed from a real-world scenario where a Tesla driver disregarded multiple safety warnings from the vehicle's autopilot system. Despite numerous alerts, the driver failed to engage with the system, resulting in a catastrophic crash. Tesla’s subsequent updates aimed to address this by increasing warning frequencies and disabling autopilot after repeated violations.
+
+## Solution Concept
+
+Building on Tesla’s advancements, I designed a comprehensive seatbelt monitoring system that goes beyond current implementations. This system leverages the car's Bluetooth dashboard for communication between the seats and the driver, integrating weight sensors and real-time data processing to ensure safety.
+
+## Key Features
+
+1. **Integrated Bluetooth Communication**: Each seat is equipped with Bluetooth capabilities to communicate with the vehicle’s dashboard and computer system, providing real-time status updates.
+
+2. **Dynamic Weight Sensors**: Weight sensors in each seat detect occupancy and ensure that seatbelts are engaged. If a seat with detected weight lacks a seatbelt, the vehicle will not start.
+
+3. **Selective Disabling**: Drivers can disable the monitoring feature for non-critical seats (e.g., seats with objects that don’t need seatbelts) but cannot disable the monitoring for the driver’s seat. This ensures compliance with safety protocols, especially in conjunction with autopilot requirements.
+
+4. **Safety Overrides**: The system prevents the car from shifting out of park unless all occupied seats with detected weight have their seatbelts fastened, enhancing overall safety.
+
+5. **Auto-Disengagement**: In line with Tesla’s approach, the system can disable the car’s autopilot and come to a safe stop if repeated seatbelt violations occur, ensuring the vehicle is safely controlled.
+
+## Impact
+
+This seatbelt monitor addresses safety gaps by enforcing seatbelt use more rigorously, potentially reducing injuries and fatalities in the event of an accident. It complements Tesla’s existing safety features and provides an additional layer of protection for all passengers.
+
+By integrating advanced monitoring with Tesla’s existing systems, this project represents a significant step forward in automotive safety technology.
