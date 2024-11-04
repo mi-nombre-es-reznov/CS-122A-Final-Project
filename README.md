@@ -1,3 +1,7 @@
+<h1 align="center">
+  Archived
+</h1>
+
 # CS-122A Final Project: Advanced Seatbelt Monitor for Tesla Vehicles
 
 ## Overview
